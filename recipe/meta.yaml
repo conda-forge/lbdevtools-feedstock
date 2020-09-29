@@ -11,7 +11,7 @@ source:
   sha256: 767a09373ba52941049c58662f55bd06711c525fa617e4a7514c98345000015d
 
 build:
-  number: 0
+  number: 1
   noarch: python
   entry_points:
     - lb-project-init=LbDevTools.ProjectInit:main
