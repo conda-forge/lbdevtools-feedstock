@@ -11,7 +11,7 @@ source:
   sha256: 9e5e90c7ba4dbda2cea4ae18bd4f27858a8edb0b9e17cebd0cd0fab0a17f6e76
 
 build:
-  number: 0
+  number: 1
   noarch: python
   entry_points:
     - lb-project-init=LbDevTools.ProjectInit:main
@@ -47,6 +47,7 @@ requirements:
     - whichcraft
     - yapf ==0.24.0
     - git
+    - glimpse
 
 test:
   imports:
