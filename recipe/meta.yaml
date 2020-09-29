@@ -47,6 +47,7 @@ requirements:
     - whichcraft
     - yapf ==0.24.0
     - git
+    - glimpse
 
 test:
   imports:
