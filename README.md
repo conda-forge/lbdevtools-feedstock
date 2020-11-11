@@ -5,11 +5,9 @@ Home: https://gitlab.cern.ch/lhcb-core/LbDevTools
 
 Package license: GPL-3.0-or-later
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lbdevtools-feedstock/blob/master/LICENSE.txt)
 
 Summary: LHCb development tools
-
-
 
 Current build status
 ====================
