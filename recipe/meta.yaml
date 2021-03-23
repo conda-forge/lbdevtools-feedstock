@@ -9,9 +9,11 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbDevTools-{{ version }}.tar.gz
   sha256: 6dcf1ecb376f47e89d3a9419312d9e5cf7a21af56f505fca9a29af7479b0387b
+  patches:
+    - loosen-version-constraints.diff
 
 build:
-  number: 0
+  number: 1
   noarch: python
   entry_points:
     - lb-project-init=LbDevTools.ProjectInit:main
@@ -36,13 +38,13 @@ requirements:
     - python <4.0
     - setuptools_scm
   run:
-    - gitdb2 <3
-    - gitpython <2.1.12
+    - gitdb2
+    - gitpython
     - jinja2
     - lbenv >=0.3.0
     - lbplatformutils
     - python <4.0
-    - python-gitlab <2
+    - python-gitlab
     - six
     - whichcraft
     - yapf ==0.24.0
