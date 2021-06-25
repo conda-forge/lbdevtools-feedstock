@@ -1,5 +1,5 @@
 {% set name = "lbdevtools" %}
-{% set version = "2.0.28" %}
+{% set version = "2.0.29" %}
 
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbDevTools-{{ version }}.tar.gz
-  sha256: 866c9645206cdedae018be9bcb56fd87c727fbc6d76cfb7b07a83a9043c7e4b8
+  sha256: 6de6d17c1d5854f1d697922d1d808c1fb4eee9061cf627c722ebdd4241f764b7
   patches:
     - loosen-version-constraints.diff
 
