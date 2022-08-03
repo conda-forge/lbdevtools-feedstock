@@ -1,6 +1,5 @@
 {% set name = "lbdevtools" %}
-{% set version = "2.0.35" %}
-
+{% set version = "2.0.36" %}
 
 package:
   name: {{ name|lower }}
@@ -8,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbDevTools-{{ version }}.tar.gz
-  sha256: c3d3b6ce360c632a61d87a64179e78a48eff5253364b0d1d70b71d49babc722d
+  sha256: d4a5b08c46154dab8f59e1119fb55a1e15b9ef8fe6a31978482c04da5fccceb5
   patches:
     - loosen-version-constraints.diff
 
@@ -29,6 +28,7 @@ build:
     - git-lb-checkout=LbDevTools.GitTools.checkout:main
     - git-lb-push=LbDevTools.GitTools.push:main
     - git-lb-clone-pkg=LbDevTools.GitTools.clone_pkg:main
+    - git-lb-reset-mtime=LbDevTools.GitTools.reset_mtime:main
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -69,6 +69,7 @@ test:
     - git-lb-checkout --help
     - git-lb-push --help
     - git-lb-clone-pkg --help
+    - git-lb-reset-mtime --help
   requires:
     - pip
 
