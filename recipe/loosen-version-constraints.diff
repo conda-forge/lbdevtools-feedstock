@@ -1,11 +1,11 @@
 diff --git a/setup.py b/setup.py
-index 8e9b519..8fb36fb 100644
+index 598a962..62121c3 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -122,10 +122,9 @@ setup(
-         "yapf==0.24.0",
-         "whichcraft",
+@@ -126,10 +126,9 @@ setup(
          "six",
+         # For pkg_resources
+         "setuptools",
 -        # version restrictions to support Python 2
 -        "GitPython<2.1.12",
 -        "python-gitlab<2",  # this is also needed to support Python 3.5
