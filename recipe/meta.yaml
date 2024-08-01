@@ -58,7 +58,7 @@ test:
   commands:
     - pip check
     - lb-project-init --help
-    - lb-dev --help
+    - MYSITEROOT=/tmp lb-dev --help
     - lb-devtools-datadir --help
     - lb-gen-release-notes --help
     - lb-check-copyright --help
