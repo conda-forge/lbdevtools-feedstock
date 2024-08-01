@@ -1,5 +1,5 @@
 {% set name = "lbdevtools" %}
-{% set version = "2.0.39" %}
+{% set version = "2.0.42" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbDevTools-{{ version }}.tar.gz
-  sha256: 61858e0bc8ac68aa2f1492be9b0d25c89cc98f705e8b31408ba1e5e401872936
+  sha256: 15eb0719a8e5018f817973eeff4396e430c72ffcb617a01b568d655922e21223
   patches:
     - loosen-version-constraints.diff
 
@@ -58,7 +58,7 @@ test:
   commands:
     - pip check
     - lb-project-init --help
-    - lb-dev --help
+    - MYSITEROOT=/tmp lb-dev --help
     - lb-devtools-datadir --help
     - lb-gen-release-notes --help
     - lb-check-copyright --help
