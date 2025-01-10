@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/LbDevTools-{{ version }}.tar.gz
-  sha256: 15eb0719a8e5018f817973eeff4396e430c72ffcb617a01b568d655922e21223
+  sha256: 964b12481ad52e634c7df4838bc0eb45b29ea8b94e5d24cf57e7eaf178b3ad2b
   patches:
     - loosen-version-constraints.diff
 
