@@ -50,6 +50,7 @@ requirements:
     - yapf ==0.24.0
     - git
     - glimpse
+    - setuptools
 
 test:
   imports:
