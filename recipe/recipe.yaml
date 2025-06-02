@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: lbdevtools
-  version: 2.0.44
+  version: 2.1.3
   python_min: 3.12
 
 package:
@@ -10,8 +10,8 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/LbDevTools-${{ version }}.tar.gz
-  sha256: 9b07385f0da3cef0a9b85103f3dffbf6bec6beb9ba094255cc8deefd0ea7ad6b
+  url: https://pypi.org/packages/source/l/lbdevtools/lbdevtools-${{ version }}.tar.gz
+  sha256: 53127c56432cd7d2a46b6adc1097a903424a77b3fdfb4adaf64402d87d519e79
 
 build:
   number: 0
