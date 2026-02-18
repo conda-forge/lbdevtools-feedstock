@@ -14,7 +14,7 @@ source:
   sha256: e6bf9b614743a5c54c7f9727980fc8fc46765ec7e775eb07221a764c485e4b05
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: ${{ PYTHON }} -m pip install . -vv
   python:
@@ -64,7 +64,7 @@ tests:
         - LbDevTools.GitTools
   - requirements:
       run:
-        - python ${{ python_min }}
+        - python >=${{ python_min }}
     script:
       - pip check
       - lb-project-init --help
