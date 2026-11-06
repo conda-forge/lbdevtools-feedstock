@@ -1,17 +1,19 @@
 schema_version: 1
 
 context:
-  name: lbdevtools
-  version: "2.1.6"
+  version: "2.1.8"
   python_min: '3.12'
 
 package:
-  name: ${{ name|lower }}
+  name: lbdevtools
   version: ${{ version }}
 
 source:
   url: https://pypi.org/packages/source/l/lbdevtools/lbdevtools-${{ version }}.tar.gz
-  sha256: e6bf9b614743a5c54c7f9727980fc8fc46765ec7e775eb07221a764c485e4b05
+  sha256: 5064669ef524491e861f33cbe35019bcb25f3a2bf604e06c201bfe9f6fc4c228
+  patches:
+    # https://gitlab.cern.ch/lhcb-core/LbDevTools/-/merge_requests/231
+    - patches/0001-Drop-six-and-gitdb2-dependencies.patch
 
 build:
   number: 0
@@ -33,6 +35,7 @@ build:
       - git-lb-push=LbDevTools.GitTools.push:main
       - git-lb-clone-pkg=LbDevTools.GitTools.clone_pkg:main
       - git-lb-reset-mtime=LbDevTools.GitTools.reset_mtime:main
+      - lb-wrap-pid-conditions=LbDevTools.wrap_pid_conditions:main
 
 requirements:
   host:
@@ -41,19 +44,17 @@ requirements:
     - setuptools
     - setuptools_scm
   run:
-    - gitdb2
     - gitpython
     - jinja2
     - lbenv >=0.3.0
     - lbplatformutils
+    - libcst
     - python >=${{ python_min }}
     - python-gitlab
-    - six
     - whichcraft
     - yapf ==0.24.0
     - git
     - glimpse
-    - setuptools
 
 tests:
   - python:
@@ -80,6 +81,7 @@ tests:
       - git-lb-push --help
       - git-lb-clone-pkg --help
       - git-lb-reset-mtime --help
+      - lb-wrap-pid-conditions --help
 
 about:
   summary: LHCb development tools

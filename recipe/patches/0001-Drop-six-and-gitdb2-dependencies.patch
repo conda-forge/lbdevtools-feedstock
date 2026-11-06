@@ -1,0 +1,151 @@
+From 365070fadd2ea1249b9c79839eb34d0bdf83b8ad Mon Sep 17 00:00:00 2001
+From: Chris Burr <christopher.burr@cern.ch>
+Date: Fri, 6 Nov 2026 16:36:34 +0100
+Subject: [PATCH] Drop six and gitdb2 dependencies
+
+six is only used for string_types, iteritems and cPickle, all of which
+have direct Python 3 equivalents, and LbDevTools requires Python >=3.12.
+
+gitdb2 is a deprecated, empty alias package for gitdb. LbDevTools never
+imports gitdb itself and GitPython already depends on it.
+---
+ LbDevTools/ReleaseNotes.py                       | 3 +--
+ LbDevTools/__init__.py                           | 4 +---
+ LbDevTools/data/cmake/extract_qmtest_metadata.py | 6 ++----
+ LbDevTools/data/cmake/tests/cmake_coverage.py    | 9 ++++-----
+ pyproject.toml                                   | 2 --
+ 5 files changed, 8 insertions(+), 16 deletions(-)
+
+diff --git a/LbDevTools/ReleaseNotes.py b/LbDevTools/ReleaseNotes.py
+index 42e72e5..83b1b3d 100755
+--- a/LbDevTools/ReleaseNotes.py
++++ b/LbDevTools/ReleaseNotes.py
+@@ -27,7 +27,6 @@ import sys
+ from collections import OrderedDict
+ 
+ import gitlab
+-import six
+ from jinja2 import Environment, FileSystemLoader
+ 
+ from LbDevTools import __version__
+@@ -325,7 +324,7 @@ def get_template(template, template_paths):
+         'three')". `labels=[[]]` will match everything.
+         """
+         label_sets = [
+-            set([ls] if isinstance(ls, six.string_types) else ls) for ls in labels
++            set([ls] if isinstance(ls, str) else ls) for ls in labels
+         ]
+         label_sets = [{l.lower() for l in ls} for ls in label_sets]
+         matches = []
+diff --git a/LbDevTools/__init__.py b/LbDevTools/__init__.py
+index a43bef2..e077d91 100644
+--- a/LbDevTools/__init__.py
++++ b/LbDevTools/__init__.py
+@@ -12,8 +12,6 @@
+ import importlib.metadata
+ import os
+ 
+-import six
+-
+ try:
+     __version__ = importlib.metadata.version(__name__)
+ except importlib.metadata.PackageNotFoundError:  # pragma: no cover
+@@ -142,7 +140,7 @@ def initProject(path, overwrite=False, ignore_pre_commit=False):
+         overwrite = set()
+     elif overwrite is True:
+         overwrite = {f[0] for f in factories}
+-    elif isinstance(overwrite, six.string_types):
++    elif isinstance(overwrite, str):
+         overwrite = {overwrite}
+     else:
+         overwrite = set(overwrite)
+diff --git a/LbDevTools/data/cmake/extract_qmtest_metadata.py b/LbDevTools/data/cmake/extract_qmtest_metadata.py
+index 539fa14..83168b6 100755
+--- a/LbDevTools/data/cmake/extract_qmtest_metadata.py
++++ b/LbDevTools/data/cmake/extract_qmtest_metadata.py
+@@ -13,8 +13,6 @@ try:
+     import platform
+     import re
+     import xml.etree.ElementTree as ET
+-
+-    import six
+ except ImportError:
+     import sys
+ 
+@@ -121,11 +119,11 @@ def analyze_suites(pkg, rootdir):
+ 
+     # transpose the dictionary of lists
+     test_labels = collections.defaultdict(set)
+-    for label, tests in six.iteritems(labels):
++    for label, tests in labels.items():
+         for test in tests:
+             test_labels[test].add(label)
+ 
+-    for test, labels in six.iteritems(test_labels):
++    for test, labels in test_labels.items():
+         print(
+             "set_property(TEST {} APPEND PROPERTY LABELS {})".format(
+                 test, " ".join(labels)
+diff --git a/LbDevTools/data/cmake/tests/cmake_coverage.py b/LbDevTools/data/cmake/tests/cmake_coverage.py
+index e0272ea..2412ca8 100755
+--- a/LbDevTools/data/cmake/tests/cmake_coverage.py
++++ b/LbDevTools/data/cmake/tests/cmake_coverage.py
+@@ -2,12 +2,11 @@
+ 
+ import atexit
+ import os
++import pickle
+ import re
+ from collections import defaultdict
+ from subprocess import PIPE, Popen
+ 
+-from six.moves import cPickle
+-
+ COVERAGE_FILE = ".cmake_coverage"
+ 
+ # coverage reports
+@@ -18,7 +17,7 @@ def update_coverage():
+     # print 'Updating CMake coverage reports'
+     if os.path.exists(COVERAGE_FILE):
+         with open(COVERAGE_FILE, "rb") as fh:
+-            data = cPickle.load(fh)
++            data = pickle.load(fh)
+         if "lines" not in data:
+             data["lines"] = {}
+     else:
+@@ -27,7 +26,7 @@ def update_coverage():
+     for filename, linenumbers in coverage.items():
+         lines[filename] = sorted(linenumbers.union(lines.get(filename, [])))
+     with open(COVERAGE_FILE, "wb") as fh:
+-        cPickle.dump(data, fh)
++        pickle.dump(data, fh)
+ 
+ 
+ atexit.register(update_coverage)
+@@ -83,7 +82,7 @@ def get_active_lines(filename):
+ 
+ if __name__ == "__main__":
+     with open("CMakeLists.txt", "rb") as fh:
+-        data = cPickle.load(COVERAGE_FILE)
++        data = pickle.load(COVERAGE_FILE)
+     lines = data["lines"]
+     for filename in sorted(lines):
+         if not os.path.exists(filename):
+diff --git a/pyproject.toml b/pyproject.toml
+index 53301e8..c8b8464 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -23,10 +23,8 @@ dependencies = [
+     "jinja2",
+     "yapf==0.24.0",
+     "whichcraft",
+-    "six",
+     "GitPython>=2.1.12",
+     "python-gitlab>=2",
+-    "gitdb2>=3",
+ ]
+ dynamic = ["version"]
+ 
+-- 
+2.47.1
+
